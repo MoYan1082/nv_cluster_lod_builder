@@ -1,20 +1,3 @@
-# Copyright (c) 2024-2025, NVIDIA CORPORATION.  All rights reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-# SPDX-FileCopyrightText: Copyright (c) 2024-2025 NVIDIA CORPORATION
-# SPDX-License-Identifier: Apache-2.0
-
 cmake_minimum_required(VERSION 3.20)
 project(nv_cluster_lod_builder)
 
@@ -28,13 +11,26 @@ if(NOT TARGET nv_cluster_builder)
 endif()
 
 
-file(GLOB SOURCES src/*.h src/*.hpp src/*.c src/*.cpp)
-file(GLOB HEADERS include/nvclusterlod/*.h include/nvclusterlod/*.hpp )
+file(GLOB SOURCES 
+    src/*.h 
+    src/*.hpp 
+    src/*.c 
+    src/*.cpp
+)
+file(GLOB HEADERS 
+    include/nvclusterlod/*.h 
+    include/nvclusterlod/*.hpp 
+)
 
 source_group("public_include" FILES ${HEADERS})
 source_group("source" FILES ${SOURCES})
 
-add_library(nv_cluster_lod_builder ${SOURCES} ${HEADERS})
+# add_library(nv_cluster_lod_builder SHARED ${SOURCES} ${HEADERS})
+
+add_executable(nv_cluster_lod_builder ${SOURCES} ${HEADERS})
+
+add_compile_options(/Zc:tabSpaces=4)
+
 target_compile_features(nv_cluster_lod_builder PUBLIC cxx_std_20)
 
 target_include_directories(nv_cluster_lod_builder PUBLIC include)
